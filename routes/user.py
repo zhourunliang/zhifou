@@ -7,10 +7,14 @@ from flask import (
     Blueprint,
     make_response,
     send_from_directory,
+    flash,
 )
+
 import os
+from werkzeug.utils import secure_filename
 from models.user import User
 from utils import log
+from config import user_file_director
 
 main = Blueprint('user', __name__)
 
@@ -25,7 +29,7 @@ def current_user():
 
 @main.route("/")
 def index():
-    return redirect(url_for('user/register'))
+    return redirect(url_for('user.register'))
 
 
 @main.route("/register", methods=['GET', 'POST'])
@@ -35,25 +39,35 @@ def register():
     else:     
         form = request.form
         # 用类函数来判断
+        
         u = User.register(form)
-        return redirect(url_for('.index'))
+        if u is None:
+            log('注册失败')
+            
+            return redirect(url_for('.index'))
+        else:
+            flash("注册成功")
+            return redirect(url_for('.index'))
 
 
-@main.route("/login", methods=['POST'])
+@main.route("/login", methods=['GET', 'POST'])
 def login():
-    form = request.form
-    u = User.validate_login(form)
-    if u is None:
-        log('login fail')
-        # 转到 topic.index 页面
-        return redirect(url_for('topic.index'))
-    else:
-        log('login success')
-        # session 中写入 user_id
-        session['user_id'] = u.id
-        # 设置 cookie 有效期为 永久
-        session.permanent = True
-        return redirect(url_for('topic.index'))
+    if request.method == 'GET':
+        return render_template('user/login.html')
+    else:       
+        form = request.form
+        u = User.validate_login(form)
+        if u is None:
+            log('login fail')
+            # 转到 topic.index 页面
+            return redirect(url_for('topic.index'))
+        else:
+            log('login success')
+            # session 中写入 user_id
+            session['user_id'] = u.id
+            # 设置 cookie 有效期为 永久
+            session.permanent = True
+            return redirect(url_for('topic.index'))
 
 
 @main.route('/profile')

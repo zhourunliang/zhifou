@@ -37,12 +37,17 @@ class User(Mongo):
     def register(cls, form):
         name = form.get('username', '')
         pwd = form.get('password', '')
+        log('name', name)
+        log('pwd', pwd)
         if len(name) > 2 and User.find_by(username=name) is None:
+            log('register 1')
             u = User.new(form)
             u.password = u.salted_password(pwd)
             u.save()
+            log(u)
             return u
         else:
+            log('register 2')
             return None
 
     @classmethod

@@ -46,7 +46,6 @@ def register():
             
             return redirect(url_for('.index'))
         else:
-            flash("注册成功")
             return redirect(url_for('.index'))
 
 

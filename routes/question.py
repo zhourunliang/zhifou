@@ -18,7 +18,7 @@ main = Blueprint('question', __name__)
 @main.route("/")
 def index():
     ts = Question.all()
-    return render_template("test/index.html", ts=ts)
+    return render_template("question/index.html", ts=ts)
 
 
 @main.route("/add")

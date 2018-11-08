@@ -1,6 +1,7 @@
 import time
 from pymongo import MongoClient
-mongua = MongoClient()
+from config import mongodb_name
+mongodb = MongoClient()
 
 
 def timestamp():
@@ -23,7 +24,7 @@ def next_id(name):
         'new': True,
     }
     # 存储数据的 id
-    doc = mongua.db['data_id']
+    doc = mongodb[mongodb_name]['data_id']
     # find_and_modify 是一个原子操作函数
     new_id = doc.find_and_modify(**kwargs).get('seq')
     return new_id
@@ -51,7 +52,7 @@ class Mongo(object):
         return cls.find_one(**kwargs) is not None
 
     def mongos(self, name):
-        return mongua.db[name]._find()
+        return mongodb[mongodb_name][name]._find()
 
     def __repr__(self):
         class_name = self.__class__.__name__
@@ -128,7 +129,7 @@ class Mongo(object):
     def all(cls):
         # 按照 id 升序排序
         # name = cls.__name__
-        # ds = mongua.db[name].find()
+        # ds = mongodb[mongodb_name][name].find()
         # l = [cls._new_with_bson(d) for d in ds]
         # return l
         return cls._find()
@@ -144,7 +145,7 @@ class Mongo(object):
         # kwargs['deleted'] = False
         flag_sort = '__sort'
         sort = kwargs.pop(flag_sort, None)
-        ds = mongua.db[name].find(kwargs)
+        ds = mongodb[mongodb_name][name].find(kwargs)
         if sort is not None:
             ds = ds.sort(sort)
         l = [cls._new_with_bson(d) for d in ds]
@@ -153,7 +154,7 @@ class Mongo(object):
     @classmethod
     def _find_raw(cls, **kwargs):
         name = cls.__name__
-        ds = mongua.db[name]._find(kwargs)
+        ds = mongodb[mongodb_name][name]._find(kwargs)
         l = [d for d in ds]
         return l
         # 直接 list() 就好了
@@ -220,7 +221,7 @@ class Mongo(object):
 
     def save(self):
         name = self.__class__.__name__
-        mongua.db[name].save(self.__dict__)
+        mongodb[mongodb_name][name].save(self.__dict__)
 
     def delete(self):
         name = self.__class__.__name__
@@ -230,7 +231,7 @@ class Mongo(object):
         values = {
             'deleted': True
         }
-        mongua.db[name].update_one(query, values)
+        mongodb[mongodb_name][name].update_one(query, values)
         # self.deleted = True
         # self.save()
 
@@ -259,5 +260,5 @@ class Mongo(object):
         query = {
             fk: self.id,
         }
-        count = mongua.db[name]._find(query).count()
+        count = mongodb[mongodb_name][name]._find(query).count()
         return count

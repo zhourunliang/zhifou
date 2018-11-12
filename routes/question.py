@@ -21,9 +21,12 @@ def index():
     return render_template("question/index.html", ts=ts)
 
 
-@main.route("/add")
+@main.route("/add", methods=['GET', 'POST'])
 def add():
-    form = {'title':'test123'}
-    m = Question.new(form)
-    return redirect(url_for('.index'))
+    if request.method == 'GET':
+        return render_template('question/add.html')
+    else:   
+        form = request.form
+        m = Question.new(form)
+        return redirect(url_for('.index'))
 

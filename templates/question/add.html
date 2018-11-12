@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>提问</title>
+    <link rel="stylesheet" href="/static/css/bootstrap/3.3.6/bootstrap.min.css">
+</head>
+<body>
+    <form class="form-horizontal" method="post" action="{{ url_for('question.add') }}">
+        <div class="control-group">
+            <label class="control-label">标题</label>
+            <div class="controls">
+                <input type="text" class="input-xlarge" name="title">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">内容</label>
+            <div class="controls">
+                <input type="text" class="input-xlarge" name="content">
+            </div>
+        </div>
+        <div class="form-actions">
+            <input type="submit" class="span-primary" value="提交">
+        </div>
+    </form>
+    <p>{{ msg }}</p>
+</body>
+</html>

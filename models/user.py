@@ -37,18 +37,15 @@ class User(Mongo):
     def register(cls, form):
         name = form.get('username', '')
         pwd = form.get('password', '')
-        log('name', name)
-        log('pwd', pwd)
-        if len(name) > 2 and User.find_by(username=name) is None:
-            log('register 1')
+        if len(name) < 2:
+            return {'data': None, 'msg': '用户名不能少于2位', 'status': False} 
+        elif not User.find_by(username=name) is None:
+            return {'data': None, 'msg': '用户名已存在', 'status': False} 
+        else:
             u = User.new(form)
             u.password = u.salted_password(pwd)
             u.save()
-            log(u)
-            return u
-        else:
-            log('register 2')
-            return None
+            return {'data': u, 'msg': '注册成功', 'status': True} 
 
     @classmethod
     def validate_login(cls, form):
@@ -56,10 +53,10 @@ class User(Mongo):
         u.username = form.get("username", '')
         u.password = form.get("password", "")
         user = User.find_by(username=u.username)
-        log('username',u.username)
-        log('password',u.password)
-        log('user',user)
-        if user is not None and user.password == u.salted_password(u.password):
-            return user
+        log('validate_login, user',user)
+        if user is None:
+            return {'data': None, 'msg': '用户名不存在', 'status': False} 
+        elif user.password != u.salted_password(u.password):    
+            return {'data': None, 'msg': '密码不正确', 'status': False} 
         else:
-            return None
+            return {'data': user, 'msg': '登陆成功', 'status': True} 

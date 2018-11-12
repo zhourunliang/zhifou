@@ -8,10 +8,11 @@ from flask import (
     make_response,
     send_from_directory,
 )
+from routes import *
 
 main = Blueprint('index', __name__)
 
 @main.route("/")
 def index():
-    u = {'name':'test'}
-    return render_template("index.html", user=u)
+    user = current_user()
+    return render_template("index.html", user=user)

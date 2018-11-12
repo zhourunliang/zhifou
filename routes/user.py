@@ -40,9 +40,10 @@ def register():
         form = request.form
         # 用类函数来判断
         u = User.register(form)
-        if u is None:
-            log('注册失败')
-            return redirect(url_for('.login'))
+        # log('register', u)
+        if u['status'] is False:
+            msg = u['msg'] 
+            return render_template('user/register.html', msg=msg)
         else:
             return redirect(url_for('.login'))
 
@@ -54,17 +55,21 @@ def login():
     else:       
         form = request.form
         u = User.validate_login(form)
-        if u is None:
-            log('login fail')
-            # 转到 question.index 页面
-            return redirect(url_for('question.index'))
+        if u['status'] is False:
+            msg = u['msg'] 
+            return render_template('user/login.html', msg=msg)
         else:
-            log('login success')
+            user = u['data']
             # session 中写入 user_id
-            session['user_id'] = u.id
+            session['user_id'] = user.id
             # 设置 cookie 有效期为 永久
             session.permanent = True
-            return redirect(url_for('question.index'))
+            return redirect(url_for('index.index'))
+
+@main.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for('index.index'))
 
 
 @main.route('/profile')

@@ -11,11 +11,13 @@ from routes.index import main as index_routes
 from routes.test import main as test_routes
 from routes.user import main as user_routes
 from routes.question import main as question_routes
+from routes.answer import main as answer_routes
 
 app.register_blueprint(index_routes)
 app.register_blueprint(test_routes, url_prefix='/test')
 app.register_blueprint(user_routes, url_prefix='/user')
 app.register_blueprint(question_routes, url_prefix='/question')
+app.register_blueprint(answer_routes, url_prefix='/answer')
 
 # 运行代码
 if __name__ == '__main__':

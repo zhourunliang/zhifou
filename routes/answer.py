@@ -8,33 +8,37 @@ from flask import (
 )
 import uuid
 from routes import *
+from utils import log
 
 from models.question import Question
+from models.answer import Answer
 
-main = Blueprint('question', __name__)
+main = Blueprint('answer', __name__)
 
 # 防csrf
 csrf_tokens = dict()
 
 @main.route("/")
 def index():
-    token = str(uuid.uuid4())
+    qid = int(request.args.get('qid'))
+    log('index qid=', qid)
     u = current_user()
     if u is None:
         return redirect(url_for('user.login'))
-    csrf_tokens[token] = u.id
-    qu = Question.all()
-    return render_template("question/index.html", qu=qu,  token=token)
+    qu = Question.get(qid)
+    an = Answer.find_all(qid=qid)
+    return render_template("answer/index.html", qu=qu, an=an)
 
-
-@main.route("/add", methods=['GET', 'POST'])
-def add():
-    if request.method == 'GET':
-        return render_template('question/add.html')
-    else:   
-        form = request.form
-        m = Question.new(form)
-        return redirect(url_for('.index'))
+@main.route("/add", methods=["POST"])
+def add():   
+    form = request.form
+    qid = form['qid']
+    log('add qid=', qid)
+    u = current_user()
+    if u is None:
+        return redirect(url_for('user.login'))
+    r = Answer.new(form, uid=u.id)
+    return redirect(url_for('.index', qid=qid))
 
 @main.route("/delete")
 def delete():

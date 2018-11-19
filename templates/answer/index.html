@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Q&A</title>
+</head>
+<body>
+        question
+        <h1>{{ qu.title }}</h1>
+        <h2>{{ qu.content }}</h2>
+        answer
+        {% for vo in an %}
+            <p>{{ vo.content }}</p>
+        {% endfor %}
+        添加答案
+        <form class="form-horizontal" method="post" action="{{ url_for('answer.add') }}">
+            <input type="hidden" class="input-xlarge" name="qid" value="{{ qu.id }}">
+            <div class="control-group">
+                <label class="control-label">内容</label>
+                <div class="controls">
+                    <input type="text" class="input-xlarge" name="content">
+                </div>
+            </div>
+            <div class="form-actions">
+                <input type="submit" class="span-primary" value="提交">
+            </div>
+        </form>
+</body>
+</html>

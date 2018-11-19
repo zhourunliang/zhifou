@@ -7,6 +7,9 @@
     <title>question</title>
 </head>
 <body>
-    <h1>this is a question page</h1>
+    {% for vo in qu %}
+        <h1>{{ vo.title }}</h1>
+        <h2>{{ vo.content }}</h2>
+    {% endfor %}
 </body>
 </html>

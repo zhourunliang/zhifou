@@ -5,3 +5,8 @@ class Question(Mongo):
         ('title', str, ''),
         ('content', str, ''),
     ]
+
+    def answers(self):
+        from .answer import Answer
+        ans = Answer.find_all(qid=self.id)
+        return ans

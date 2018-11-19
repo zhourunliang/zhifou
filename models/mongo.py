@@ -3,6 +3,8 @@ from pymongo import MongoClient
 from config import mongodb_name
 mongodb = MongoClient()
 
+from utils import log
+
 
 def timestamp():
     return int(time.time())

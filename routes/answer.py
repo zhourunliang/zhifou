@@ -9,6 +9,7 @@ from flask import (
 import uuid
 from routes import *
 from utils import log
+import json
 
 from models.question import Question
 from models.answer import Answer
@@ -21,7 +22,7 @@ csrf_tokens = dict()
 @main.route("/")
 def index():
     qid = int(request.args.get('qid'))
-    log('index qid=', qid)
+    # log('index qid=', qid)
     u = current_user()
     if u is None:
         return redirect(url_for('user.login'))
@@ -33,11 +34,11 @@ def index():
 def add():   
     form = request.form
     qid = form['qid']
-    log('add qid=', qid)
+    # log('add qid=', qid)
     u = current_user()
     if u is None:
         return redirect(url_for('user.login'))
-    r = Answer.new(form, uid=u.id)
+    r = Answer.new(form, user=u.__dict__)
     return redirect(url_for('.index', qid=qid))
 
 @main.route("/delete")

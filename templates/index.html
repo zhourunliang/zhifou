@@ -85,8 +85,8 @@
 				</div>
 			</div>
 		</nav>
-        <!-- nav end -->
-        
+		<!-- nav end -->
+
 
         <div class="container">
 			<div class="row">
@@ -100,57 +100,36 @@
 						</div>
 					</div>
 					<hr>
-					<div class="row">
-						<div class="col-md-1">
-							<div class="row">
-								<a href="#"><img class="img-responsive img-rounded" src="http://pic2.zhimg.com/b8122761a03db2d4f31ca7608f02030d_m.jpg" alt=""></a>
+					
+					{% for an in answer %}
+						<div class="row">
+							<div class="col-md-1">
+								<div class="row">
+									<a href="#"><img class="img-responsive img-rounded" src="http://pic2.zhimg.com/b8122761a03db2d4f31ca7608f02030d_m.jpg" alt=""></a>
+								</div>
+								<div class="row">
+									<a href="#"><div class="text-center number">1</div></a>
+								</div>
 							</div>
-							<div class="row">
-								<a href="#"><div class="text-center number">1</div></a>
-							</div>
-						</div>
-						<div class="col-md-11" id="question">
-							<p><a href="#">mu peng</a> 回答了问题 • 32 分钟前</p>
-							<p><a href="#"><strong>程序员一定要熬夜吗？有没有可能白天就基本完成工作，每天早睡早起？</strong></a></p>
-							<p>mu peng，软件架构师，新加坡</p>
-							<p>今晚熬夜写的code，会变成明天要改的bug。不一定要熬夜，想明白再写，效率会很高。</p>
-							<ul class="list-inline">
-								<li><a href="#"><span class="glyphicon glyphicon-plus"></span> 关注问题</a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 添加评论</a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-heart-empty"></span> 感谢</a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-share"></span> 分享</a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-bookmark"></span> 收藏</a></li>
-								<li><a href="#">• 没有帮助</a></li>
-								<li><a href="#">• 举报</a></li>
-							</ul>
-						</div>
-					</div>
-					<hr>
-					<div class="row">
-						<div class="col-md-1">
-							<div class="row">
-								<a href="#"><img class="img-responsive img-rounded" src="http://pic2.zhimg.com/b8122761a03db2d4f31ca7608f02030d_m.jpg" alt=""></a>
-							</div>
-							<div class="row">
-								<a href="#"><div class="text-center number">1</div></a>
+							<div class="col-md-11" id="question">
+								<p><a href="#">{{ an.user.username }}</a> 回答了问题 • 32 分钟前</p>
+								<p><a href="#"><strong>{{ an.question().title }}</strong></a></p>
+								<p>mu peng，软件架构师，新加坡</p>
+								<p>{{ an.content }}</p>
+								<ul class="list-inline">
+									<li><a href="#"><span class="glyphicon glyphicon-plus"></span> 关注问题</a></li>
+									<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 添加评论</a></li>
+									<li><a href="#"><span class="glyphicon glyphicon-heart-empty"></span> 感谢</a></li>
+									<li><a href="#"><span class="glyphicon glyphicon-share"></span> 分享</a></li>
+									<li><a href="#"><span class="glyphicon glyphicon-bookmark"></span> 收藏</a></li>
+									<li><a href="#">• 没有帮助</a></li>
+									<li><a href="#">• 举报</a></li>
+								</ul>
 							</div>
 						</div>
-						<div class="col-md-11" id="question">
-							<p><a href="#">mu peng</a> 回答了问题 • 32 分钟前</p>
-							<p><a href="#"><strong>程序员一定要熬夜吗？有没有可能白天就基本完成工作，每天早睡早起？</strong></a></p>
-							<p>mu peng，软件架构师，新加坡</p>
-							<p>今晚熬夜写的code，会变成明天要改的bug。不一定要熬夜，想明白再写，效率会很高。</p>
-							<ul class="list-inline">
-								<li><a href="#"><span class="glyphicon glyphicon-plus"></span> 关注问题</a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 添加评论</a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-heart-empty"></span> 感谢</a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-share"></span> 分享</a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-bookmark"></span> 收藏</a></li>
-								<li><a href="#">• 没有帮助</a></li>
-								<li><a href="#">• 举报</a></li>
-							</ul>
-						</div>
-					</div>
+						<hr>
+					{% endfor %}
+					
 				</div>
 				
 				<div class="col-md-4">

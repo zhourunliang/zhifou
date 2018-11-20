@@ -5,7 +5,9 @@ class User(Mongo):
     __fields__ = Mongo.__fields__ + [
         ('username', str, ''),
         ('password', str, ''),
-        ('user_image', str, ''),
+        ('avatar', str, ''),
+        ('area', str, ''),
+        ('job', str, ''),
     ]
 
     """
@@ -14,8 +16,9 @@ class User(Mongo):
         """
 
     def __init__(self):
-        self.user_image = 'default.png'
-
+        self.avatar = 'default.png'
+        
+    @classmethod
     def salted_password(self, password, salt='$!@><?>HUI&DWQa`'):
         import hashlib
         def sha256(ascii_str):

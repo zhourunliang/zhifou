@@ -10,6 +10,8 @@ import uuid
 from routes import *
 
 from models.question import Question
+from models.answer import Answer
+from utils import log
 
 main = Blueprint('question', __name__)
 
@@ -52,4 +54,11 @@ def delete():
             abort(404)
     else:
         abort(403)
+
+@main.route('/detail/<int:id>')
+def detail(id):
+    qu = Question.get(id)
+    an = Answer.find_all(qid=id)
+    return render_template("question/detail.html", question=qu, answer=an)
+
 

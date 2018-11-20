@@ -29,8 +29,7 @@ def current_user():
 
 @main.route("/")
 def index():
-    return redirect(url_for('user.register'))
-
+    return redirect(url_for('.login'))
 
 @main.route("/register", methods=['GET', 'POST'])
 def register():
@@ -46,7 +45,6 @@ def register():
             return render_template('user/register.html', msg=msg)
         else:
             return redirect(url_for('.login'))
-
 
 @main.route("/login", methods=['GET', 'POST'])
 def login():
@@ -72,42 +70,53 @@ def logout():
     return redirect(url_for('index.index'))
 
 
-@main.route('/profile')
+@main.route('/profile', methods=['GET', 'POST'])
 def profile():
     u = current_user()
-    if u is None:
-        return redirect(url_for('.index'))
-    else:
-        return render_template('profile.html', user=u)
+    if request.method == 'GET':    
+        if u is None:
+            return redirect(url_for('.login'))
+        else:
+            return render_template('user/profile.html', user=u)
+    else:     
+        form = request.form
+        name = form.get('username', '')
+        pwd = form.get('password', '')
+        area = form.get('area', '')
+        job = form.get('job', '')
+        if len(name) < 2:
+            return render_template('user/profile.html', msg='用户名不能少于2位', user=u)
+        elif User.find_by(username=name).id != u.id:
+            return render_template('user/profile.html', msg='用户名已存在', user=u)
+        else:
+            if 'file' in request.files:
+                file = request.files['file']
+                # log('file', file)
+                u.avatar = add_img(file)
 
+            u.username = name
+            if pwd is not '':
+                u.password = User.salted_password(pwd)
+            u.area = area
+            u.job = job
+            u.save()
+            return render_template('user/profile.html', msg='修改成功', user=u)
 
 def allow_file(filename):
     suffix = filename.split('.')[-1]
     from config import accept_user_file_type
     return suffix in accept_user_file_type
 
-
-@main.route('/addimg', methods=["POST"])
-def add_img():
-    u = current_user()
-
-    if u is None:
-        return redirect(url_for(".profile"))
-
-    if 'file' not in request.files:
-        return redirect(request.url)
-
-    file = request.files['file']
+def add_img(file):
     if file.filename == '':
         return redirect(request.url)
 
     if allow_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(user_file_director, filename))
-        u.user_image = filename
-        u.save()
-
-    return redirect(url_for(".profile"))
+        return filename
+    else:
+        return ''
 
 
 @main.route("/uploads/<filename>")

@@ -39,7 +39,7 @@ def add():
     if u is None:
         return redirect(url_for('user.login'))
     r = Answer.new(form, user=u.__dict__)
-    return redirect(url_for('.index', qid=qid))
+    return redirect(url_for('question.detail', id=qid))
 
 @main.route("/delete")
 def delete():

@@ -52,6 +52,7 @@ def login():
         return render_template('user/login.html')
     else:       
         form = request.form
+        log('login', form)
         u = User.validate_login(form)
         if u['status'] is False:
             msg = u['msg'] 
@@ -70,14 +71,14 @@ def logout():
     return redirect(url_for('index.index'))
 
 
-@main.route('/profile', methods=['GET', 'POST'])
-def profile():
+@main.route('/setting', methods=['GET', 'POST'])
+def setting():
     u = current_user()
     if request.method == 'GET':    
         if u is None:
             return redirect(url_for('.login'))
         else:
-            return render_template('user/profile.html', user=u)
+            return render_template('user/setting.html', user=u)
     else:     
         form = request.form
         name = form.get('username', '')
@@ -85,9 +86,9 @@ def profile():
         area = form.get('area', '')
         job = form.get('job', '')
         if len(name) < 2:
-            return render_template('user/profile.html', msg='用户名不能少于2位', user=u)
+            return render_template('user/setting.html', msg='用户名不能少于2位', user=u)
         elif User.find_by(username=name).id != u.id:
-            return render_template('user/profile.html', msg='用户名已存在', user=u)
+            return render_template('user/setting.html', msg='用户名已存在', user=u)
         else:
             if 'file' in request.files:
                 file = request.files['file']
@@ -100,7 +101,7 @@ def profile():
             u.area = area
             u.job = job
             u.save()
-            return render_template('user/profile.html', msg='修改成功', user=u)
+            return render_template('user/setting.html', msg='修改成功', user=u)
 
 def allow_file(filename):
     suffix = filename.split('.')[-1]

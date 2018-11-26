@@ -1,93 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>项目</title>
-        <script src="/static/js/jquery/2.0.0/jquery.min.js"></script>
-        <link href="/static/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
-        <script src="/static/js/bootstrap/3.3.6/bootstrap.min.js"></script>
-    </head>
-    <body>
-        
-        <!-- nav start -->
-		<nav class="navbar navbar-default">
-			<div class="container">
-				<!-- brand -->
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					</button>
-					<a href="#" class="navbar-brand">
-						知否
-					</a>
-				</div>
-				
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<!-- search start -->
-					<form class="navbar-form navbar-left" role="search" action="" method="post">
-						<div class="form-group has-feedback">
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="搜索话题、问题或人...">
-								<span class="input-group-btn">
-									<button class="btn btn-default" type="submit">
-									<span class="glyphicon glyphicon-search"></span>
-									</button>
-								</span>
-							</div>
-						</div>
-						<button type="submit" class="btn btn-primary">提问</button>
-					</form>
-					<!-- search end -->
-					
-					<!-- main-content -->
-					<ul class="nav navbar-nav">
-						<li class="active"><a href="#">首页</a></li>
-						<li><a href="#">话题</a></li>
-						<li><a href="#">发现</a></li>
-						<li><a href="#">消息</a></li>
-					</ul>
-					<!-- main-content end -->
-					<!-- right-side -->
-					<ul class="nav navbar-nav navbar-right">
+{% extends "base.html" %}
 
-						{% if user %}
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-									<img src="http://pic4.zhimg.com/047f42d97_s.jpg" alt="">
-									{{ user.username }}
-								</a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="{{ url_for('user.profile') }}"><span class="glyphicon glyphicon-user"></span> 我的主页</a></li>
-									<li class="divider"></li>
-									<li><a href="#"><span class="glyphicon glyphicon-envelope"></span> 私信</a></li>
-									<li class="divider"></li>
-									<li><a href="#"><span class="glyphicon glyphicon-cog"></span> 设置</a></li>
-									<li class="divider"></li>
-									<li><a href="{{ url_for('user.logout') }}"><span class="glyphicon glyphicon-off"></span> 退出</a></li>
-								</ul>
-							</li>
-						{% else %}
-							<li class="dropdown">
-								<a href="{{ url_for('user.login') }}" class="dropdown-toggle" role="button" aria-expanded="false">
-									请登陆
-								</a>
-							</li>
-						{% endif %}
+{% block title %} 首页 {% endblock %}
 
-					</ul>
-					<!-- right-side end -->
-				</div>
-			</div>
-		</nav>
-		<!-- nav end -->
+{% block head %}
+	{{  super()  }}	
+{% endblock %}
 
-
+{% block content %}
         <div class="container">
 			<div class="row">
 				<div class="col-md-8">
@@ -136,15 +55,11 @@
 				
 				<div class="col-md-4">
 					<div class="row">
-						<a href="{{ url_for('question.add') }}">提问</a>
+						<!-- <a href="{{ url_for('question.add') }}">提问</a> -->
 					</div>
 				</div>
 			</div>
 		</div>
 
-
-
-    </body>
-</html>
-
+{% endblock %}
   

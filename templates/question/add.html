@@ -1,28 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>提问</title>
-    <link rel="stylesheet" href="/static/css/bootstrap/3.3.6/bootstrap.min.css">
-</head>
-<body>
-    <form class="form-horizontal" method="post" action="{{ url_for('question.add') }}">
-        <div class="control-group">
-            <label class="control-label">标题</label>
-            <div class="controls">
-                <input type="text" class="input-xlarge" name="title">
+{% extends "base.html" %}
+
+{% block title %} 提问 {% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <form method="post" action="{{ url_for('question.add') }}">
+            <div class="form-group">
+                <label for="username">标题</label>
+                <input type="text" class="form-control input-xlarge" id="title" name="title">
             </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">内容</label>
-            <div class="controls">
-                <input type="text" class="input-xlarge" name="content">
+            <div class="form-group">
+                <label for="content">内容</label>
+                <textarea class="form-control" id="content" name="content"></textarea>
             </div>
-        </div>
-        <div class="form-actions">
-            <input type="submit" class="span-primary" value="提交">
-        </div>
-    </form>
-    <p>{{ msg }}</p>
-</body>
-</html>
+    
+            <div class="checkbox">
+                <label>
+                    <p>{{ msg }}</p>
+                </label>
+            </div>
+            <button type="submit" class="btn btn-default">提交</button>
+        </form>
+    </div>
+
+{% endblock %}

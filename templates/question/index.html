@@ -1,15 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>question</title>
-</head>
-<body>
-    {% for vo in qu %}
-        <h1>{{ vo.title }}</h1>
-        <h2>{{ vo.content }}</h2>
-    {% endfor %}
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %} 问题列表 {% endblock %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-9">
+                        <span class="glyphicon glyphicon-list-alt"></span> 问题列表
+                    </div>
+                    <div class="col-md-3 text-right">
+                        <span class="glyphicon glyphicon-cog"></span> 设置
+                    </div>
+                </div>
+                <hr>
+
+                {% for vo in qu %}
+                    <div class="row">
+                        <div class="col-md-12" id="question">
+                            <p>{{ vo.title }}</p>
+                            <p>{{ vo.content }}</p>
+                            <ul class="list-inline">
+                                <li><a href="#"><span class="glyphicon glyphicon-plus"></span> 关注问题</a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon-comment"></span> 添加评论</a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon-heart-empty"></span> 感谢</a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon-share"></span> 分享</a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon-bookmark"></span> 收藏</a></li>
+                                <li><a href="#">• 没有帮助</a></li>
+                                <li><a href="#">• 举报</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <hr>
+                {% endfor %}
+
+            </div>
+				
+            <div class="col-md-4">
+                <div class="row">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

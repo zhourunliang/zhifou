@@ -21,12 +21,12 @@ csrf_tokens = dict()
 @main.route("/")
 def index():
     token = str(uuid.uuid4())
-    u = current_user()
-    if u is None:
+    user = current_user()
+    if user is None:
         return redirect(url_for('user.login'))
-    csrf_tokens[token] = u.id
+    csrf_tokens[token] = user.id
     qu = Question.all()
-    return render_template("question/index.html", qu=qu,  token=token)
+    return render_template("question/index.html", qu=qu,  token=token, user=user)
 
 
 @main.route("/add", methods=['GET', 'POST'])

@@ -14,7 +14,7 @@ import os
 from werkzeug.utils import secure_filename
 from models.user import User
 from utils import log
-from config import user_file_director
+from config import user_img_director
 
 main = Blueprint('user', __name__)
 
@@ -103,18 +103,18 @@ def setting():
             u.save()
             return render_template('user/setting.html', msg='修改成功', user=u)
 
-def allow_file(filename):
+def allow_img(filename):
     suffix = filename.split('.')[-1]
-    from config import accept_user_file_type
-    return suffix in accept_user_file_type
+    from config import accept_user_img_type
+    return suffix in accept_user_img_type
 
 def add_img(file):
     if file.filename == '':
         return redirect(request.url)
 
-    if allow_file(file.filename):
+    if allow_img(file.filename):
         filename = secure_filename(file.filename)
-        file.save(os.path.join(user_file_director, filename))
+        file.save(os.path.join(user_img_director, filename))
         return filename
     else:
         return ''
@@ -122,4 +122,4 @@ def add_img(file):
 
 @main.route("/uploads/<filename>")
 def uploads(filename):
-    return send_from_directory(user_file_director, filename)
+    return send_from_directory(user_img_director, filename)

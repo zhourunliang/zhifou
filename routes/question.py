@@ -59,6 +59,44 @@ def delete():
 def detail(id):
     qu = Question.get(id)
     an = Answer.find_all(qid=id)
-    return render_template("question/detail.html", question=qu, answer=an)
+    u = current_user()
+    follows = qu.follows
+    if follows and follows[str(u.id)] is not None:
+        is_follow = True
+    else:
+        is_follow = False
+
+    return render_template("question/detail.html", question=qu, answer=an, is_follow=is_follow)
+
+
+@main.route("/follow")
+def follow():
+    id = int(request.args.get('id'))
+    user = current_user()
+    if user is None:
+        return redirect(url_for('user.login'))
+    qu = Question.find(id)
+    follows = qu.follows
+    follows[str(user.id)] = user.__dict__
+    # log('follow1', follows)
+    qu.follows = follows
+    # log('follow2',qu.follows)
+    qu.save()
+    return redirect(url_for('question.detail', id=id))
+
+@main.route("/unfollow")
+def unfollow():
+    id = int(request.args.get('id'))
+    user = current_user()
+    if user is None:
+        return redirect(url_for('user.login'))
+    qu = Question.find(id)
+    follows = qu.follows
+    follows = follows.pop(str(user.id))
+    # log('follow1', follows)
+    qu.follows = follows
+    # log('follow2',qu.follows)
+    qu.save()
+    return redirect(url_for('question.detail', id=id))
 
 

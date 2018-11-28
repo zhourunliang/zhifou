@@ -32,13 +32,13 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<!-- search start -->
-					<form class="navbar-form navbar-left" role="search" action="" method="post">
+					<form class="navbar-form navbar-left" role="search" method="get" action="{{ url_for('index.search') }}" >
 						<div class="form-group has-feedback">
 							<div class="input-group">
-								<input type="text" class="form-control" placeholder="搜索话题、问题或人...">
+								<input type="text" name="keyword" class="form-control" placeholder="搜索问题...">
 								<span class="input-group-btn">
 									<button class="btn btn-default" type="submit">
-									<span class="glyphicon glyphicon-search"></span>
+										<span class="glyphicon glyphicon-search"></span>
 									</button>
 								</span>
 							</div>

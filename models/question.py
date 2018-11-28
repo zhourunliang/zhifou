@@ -4,6 +4,7 @@ class Question(Mongo):
     __fields__ = Mongo.__fields__ + [
         ('title', str, ''),
         ('content', str, ''),
+        ('follows', dict, {}),
     ]
 
     def answers(self):

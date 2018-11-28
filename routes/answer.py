@@ -58,3 +58,18 @@ def delete():
     else:
         abort(403)
 
+@main.route("/like")
+def like():
+    id = int(request.args.get('id'))
+    an = Answer.find(id)
+    an.like = an.like + 1
+    an.save()
+    return redirect(url_for('question.detail', id=an.qid))
+
+@main.route("/unlike")
+def unlike():
+    id = int(request.args.get('id'))
+    an = Answer.find(id)
+    an.unlike = an.unlike + 1
+    an.save()
+    return redirect(url_for('question.detail', id=an.qid))

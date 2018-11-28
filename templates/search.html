@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %} 搜索结果 {% endblock %}
+
+{% block head %}
+	{{  super()  }}	
+{% endblock %}
+
+{% block content %}
+        <div class="container">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="row">
+						<div class="col-md-12">
+							<span class="glyphicon glyphicon-list-alt"></span> “{{ keyword }}”的搜索结果
+						</div>
+					</div>
+					<hr>
+				
+					{% if qu %}
+
+						{% for vo in qu %}
+							<div class="row">
+								<div class="col-md-12" id="question">
+									<p><a href="{{ url_for('question.detail', id=vo.id) }}">{{ vo.title }}</a></p>
+									<p>{{ vo.content }}</p>
+								</div>
+							</div>
+							<hr>
+						{% endfor %}
+
+					{% else %}
+					
+						<div class="row">
+							<div class="col-md-12">
+								<p>找不到搜索结果</p>
+							</div>
+						</div>
+
+					{% endif %}
+					
+				</div>
+				
+				<div class="col-md-4">
+					<div class="row">
+						<!-- <a href="{{ url_for('question.add') }}">提问</a> -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+{% endblock %}
+  

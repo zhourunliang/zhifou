@@ -17,9 +17,6 @@
                         <div class="col-md-9">
                             <span class="glyphicon glyphicon-list-alt"></span> 最新动态
                         </div>
-                        <div class="col-md-3 text-right">
-                            <span class="glyphicon glyphicon-cog"></span> 设置
-                        </div>
                     </div>
                     <hr>
 
@@ -28,14 +25,13 @@
 								<p>{{ question.title }}</p>
 								<p>{{ question.content }}</p>
 								<ul class="list-inline">
-									<li><a href="#"><span class="glyphicon glyphicon-plus"></span> 关注问题</a></li>
-									<li><a href="#"><span class="glyphicon glyphicon-comment"></span> 添加评论</a></li>
-									<li><a href="#"><span class="glyphicon glyphicon-heart-empty"></span> 感谢</a></li>
-									<li><a href="#"><span class="glyphicon glyphicon-share"></span> 分享</a></li>
-									<li><a href="#"><span class="glyphicon glyphicon-bookmark"></span> 收藏</a></li>
-									<li><a href="#">• 没有帮助</a></li>
-									<li><a href="#">• 举报</a></li>
-								</ul>
+                                    {% if is_follow %}
+                                        <li><span class="glyphicon glyphicon-plus"></span> 已关注</li>
+                                        <li><a href="{{ url_for('question.unfollow', id=question.id) }}"><span class="glyphicon glyphicon-minus"></span> 取消关注</a></li>                                        
+                                    {% else %}
+                                        <li><a href="{{ url_for('question.follow', id=question.id) }}"><span class="glyphicon glyphicon-plus"></span> 关注问题</a></li>                                        
+                                    {% endif %}
+                                </ul>
 							</div>
 						</div>
                         <hr>
@@ -45,12 +41,8 @@
                                 <div class="col-md-12" id="answer">
                                     <p data-provide="markdown">{{ vo.content }}</p>
                                     <ul class="list-inline">
-                                        <li><a href="#"><span class="glyphicon glyphicon-comment"></span> 添加评论</a></li>
-                                        <li><a href="#"><span class="glyphicon glyphicon-heart-empty"></span> 感谢</a></li>
-                                        <li><a href="#"><span class="glyphicon glyphicon-share"></span> 分享</a></li>
-                                        <li><a href="#"><span class="glyphicon glyphicon-bookmark"></span> 收藏</a></li>
-                                        <li><a href="#">• 没有帮助</a></li>
-                                        <li><a href="#">• 举报</a></li>
+                                        <li><a href="{{ url_for('answer.like', id=vo.id) }}"><span class="glyphicon glyphicon-thumbs-up"></span> 赞成 {{ vo.like }}</a></li>
+                                        <li><a href="{{ url_for('answer.unlike', id=vo.id) }}"><span class="glyphicon glyphicon-thumbs-down"></span> 反对 {{ vo.unlike }}</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -66,6 +58,7 @@
                                     </div>
                                     <button type="submit" class="btn btn-default">提交</button>
                                 </form>
+                                <P>{{ msg }}</P>
                             </div>
                         </div>            
                 </div>

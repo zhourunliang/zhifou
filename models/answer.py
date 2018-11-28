@@ -5,6 +5,8 @@ class Answer(Mongo):
         ('qid', int, ''),
         ('content', str, ''),
         ('user', dict, {}),
+        ('like', int, 0),
+        ('unlike', int, 0),
     ]
 
     def question(self):

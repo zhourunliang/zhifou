@@ -35,7 +35,10 @@ def add():
         return render_template('question/add.html')
     else:   
         form = request.form
-        m = Question.new(form)
+        u = current_user()
+        if u is None:
+            return redirect(url_for('user.login'))
+        m = Question.new(form, user=u.__dict__)
         return redirect(url_for('.index'))
 
 @main.route("/delete")
@@ -61,7 +64,9 @@ def detail(id):
     an = Answer.find_all(qid=id)
     u = current_user()
     follows = qu.follows
-    if follows and follows[str(u.id)] is not None:
+    log('detail follows', follows)
+    log('detail u', u)
+    if str(u.id) in follows:
         is_follow = True
     else:
         is_follow = False
@@ -77,10 +82,13 @@ def follow():
         return redirect(url_for('user.login'))
     qu = Question.find(id)
     follows = qu.follows
+    log('follow1', follows)
+    if not follows:
+        follows = {}
     follows[str(user.id)] = user.__dict__
-    # log('follow1', follows)
+    log('follow2', follows)
     qu.follows = follows
-    # log('follow2',qu.follows)
+    log('follow3',qu.follows)
     qu.save()
     return redirect(url_for('question.detail', id=id))
 
@@ -92,10 +100,12 @@ def unfollow():
         return redirect(url_for('user.login'))
     qu = Question.find(id)
     follows = qu.follows
-    follows = follows.pop(str(user.id))
-    # log('follow1', follows)
+    log('unfollow1', follows)
+    del follows[str(user.id)]
+    # follows = follows.pop(str(user.id))
+    log('unfollow2', follows)
     qu.follows = follows
-    # log('follow2',qu.follows)
+    log('unfollow3',qu.follows)
     qu.save()
     return redirect(url_for('question.detail', id=id))
 

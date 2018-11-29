@@ -16,6 +16,7 @@ from models.question import Question
 
 main = Blueprint('index', __name__)
 
+
 @main.route("/")
 def index():
     user = current_user()
@@ -33,3 +34,4 @@ def search():
     # log(keyword)
     # log(qu)
     return render_template("search.html", qu=qu, keyword=keyword)
+

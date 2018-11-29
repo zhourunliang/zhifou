@@ -1,6 +1,11 @@
-from flask import session
+from flask import (
+    session,
+    Blueprint,
+)
 
 from models.user import User
+
+main = Blueprint('/', __name__)
 
 def current_user():
     uid = session.get('user_id', '')

@@ -31,14 +31,13 @@
 								</div>
 							</div>
 							<div class="col-md-11" id="question">
-								<p><a href="#">{{ an.user.username }}</a> 回答了问题 • 32 分钟前</p>
+								<p><a href="#">{{ an.user.username }}</a> 回答了问题 • {{ time_format(an.created_time) }}</p>
 								<p><a href="{{ url_for('question.detail', id=an.question().id) }}"><strong>{{ an.question().title }}</strong></a></p>
 								{% if (an.user.job and an.user.area) %}
 									<p>{{ an.user.job }}，{{ an.user.area }}</p>
 								{% endif %}
 								<p>{{ an.content }}</p>
-								<ul class="list-inline">
-									<li><a href="#"><span class="glyphicon glyphicon-plus"></span> 关注问题</a></li>
+								<ul class="list-inline">									
 									<li><a href="{{ url_for('question.detail', id=an.question().id) }}"><span class="glyphicon glyphicon-comment"></span> 回答问题 </a></li>
 									<!-- <li><a href="#"><span class="glyphicon glyphicon-heart-empty"></span> 感谢</a></li>
 									<li><a href="#"><span class="glyphicon glyphicon-share"></span> 分享</a></li>

@@ -34,6 +34,10 @@ def get_current_user():
 def get_time_format():
     return dict(time_format=time_format)
 
+@app.context_processor
+def get_isinstance():
+    return dict(isinstance=isinstance)
+
 # 运行代码
 if __name__ == '__main__':
     # debug 模式可以自动加载你对代码的变动, 所以不用重启程序

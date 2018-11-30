@@ -21,7 +21,13 @@ main = Blueprint('index', __name__)
 def index():
     user = current_user()
     answer = Answer.find_all()
-    return render_template("index.html", user=user, answer=answer)
+    question = Question.find_all()
+    
+    # log('answer', answer)
+    # log('question', question)   
+    list_data = sorted(answer + question, key = lambda i:int(i.created_time), reverse = True)
+   
+    return render_template("index.html", user=user, list_data=list_data, Answer=Answer)
 
 @main.route("/uploads/img/<filename>")
 def uploads(filename):

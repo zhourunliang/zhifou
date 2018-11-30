@@ -20,34 +20,67 @@
 					</div>
 					<hr>
 					
-					{% for an in answer %}
-						<div class="row">
-							<div class="col-md-1">
-								<div class="row">
-									<a href="#"><img class="img-responsive img-rounded" src="{{ '/uploads/img/' + an.user.avatar }}" alt=""></a>
+					{% for vo in list_data %}
+
+						{% if isinstance(vo, Answer) %}
+							<div class="row">
+								<div class="col-md-1">
+									<div class="row">
+										<a href="#"><img class="img-responsive img-rounded" src="{{ '/uploads/img/' + vo.user.avatar }}" alt=""></a>
+									</div>
+									<div class="row">
+										<a href="#"><div class="text-center number">{{ loop.index }}</div></a>
+									</div>
 								</div>
-								<div class="row">
-									<a href="#"><div class="text-center number">1</div></a>
+								<div class="col-md-11" id="question">
+									<p><a href="#">{{ vo.user.username }}</a> 回答了问题 • {{ time_format(vo.created_time) }}</p>
+									<p><a href="{{ url_for('question.detail', id=vo.question().id) }}"><strong>{{ vo.question().title }}</strong></a></p>
+									{% if (vo.user.job and vo.user.area) %}
+										<p>{{ vo.user.job }}，{{ vo.user.area }}</p>
+									{% endif %}
+									<p>{{ vo.content }}</p>
+									<ul class="list-inline">									
+										<li><a href="{{ url_for('question.detail', id=vo.question().id) }}"><span class="glyphicon glyphicon-comment"></span> 回答问题 </a></li>
+										<!-- <li><a href="#"><span class="glyphicon glyphicon-heart-empty"></span> 感谢</a></li>
+										<li><a href="#"><span class="glyphicon glyphicon-share"></span> 分享</a></li>
+										<li><a href="#"><span class="glyphicon glyphicon-bookmark"></span> 收藏</a></li>
+										<li><a href="#">• 没有帮助</a></li>
+										<li><a href="#">• 举报</a></li> -->
+									</ul>
 								</div>
 							</div>
-							<div class="col-md-11" id="question">
-								<p><a href="#">{{ an.user.username }}</a> 回答了问题 • {{ time_format(an.created_time) }}</p>
-								<p><a href="{{ url_for('question.detail', id=an.question().id) }}"><strong>{{ an.question().title }}</strong></a></p>
-								{% if (an.user.job and an.user.area) %}
-									<p>{{ an.user.job }}，{{ an.user.area }}</p>
-								{% endif %}
-								<p>{{ an.content }}</p>
-								<ul class="list-inline">									
-									<li><a href="{{ url_for('question.detail', id=an.question().id) }}"><span class="glyphicon glyphicon-comment"></span> 回答问题 </a></li>
-									<!-- <li><a href="#"><span class="glyphicon glyphicon-heart-empty"></span> 感谢</a></li>
-									<li><a href="#"><span class="glyphicon glyphicon-share"></span> 分享</a></li>
-									<li><a href="#"><span class="glyphicon glyphicon-bookmark"></span> 收藏</a></li>
-									<li><a href="#">• 没有帮助</a></li>
-									<li><a href="#">• 举报</a></li> -->
-								</ul>
+							<hr>
+						{% else %}
+							<div class="row">
+								<div class="col-md-1">
+									<div class="row">
+										<a href="#"><img class="img-responsive img-rounded" src="{{ '/uploads/img/' + vo.user.avatar }}" alt=""></a>
+									</div>
+									<div class="row">
+										<a href="#"><div class="text-center number">{{ loop.index }}</div></a>
+									</div>
+								</div>
+								<div class="col-md-11" id="question">
+									<p><a href="#">{{ vo.user.username }}</a> 提出问题 • {{ time_format(vo.created_time) }}</p>
+									<p><a href="{{ url_for('question.detail', id=vo.id) }}"><strong>{{ vo.title }}</strong></a></p>
+									{% if (vo.user.job and vo.user.area) %}
+										<p>{{ vo.user.job }}，{{ vo.user.area }}</p>
+									{% endif %}
+									<p>{{ vo.content }}</p>
+									<ul class="list-inline">									
+										<li><a href="{{ url_for('question.detail', id=vo.id) }}"><span class="glyphicon glyphicon-comment"></span> 回答问题 </a></li>
+										<!-- <li><a href="#"><span class="glyphicon glyphicon-heart-empty"></span> 感谢</a></li>
+										<li><a href="#"><span class="glyphicon glyphicon-share"></span> 分享</a></li>
+										<li><a href="#"><span class="glyphicon glyphicon-bookmark"></span> 收藏</a></li>
+										<li><a href="#">• 没有帮助</a></li>
+										<li><a href="#">• 举报</a></li> -->
+									</ul>
+								</div>
 							</div>
-						</div>
-						<hr>
+							<hr>
+						{% endif %}
+
+
 					{% endfor %}
 					
 				</div>

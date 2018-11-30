@@ -38,7 +38,8 @@ def add():
         u = current_user()
         if u is None:
             return redirect(url_for('user.login'))
-        m = Question.new(form, user=u.__dict__)
+        
+        m = Question.new(form, uid=u.id, user=u.__dict__)
         return redirect(url_for('.index'))
 
 @main.route("/delete")

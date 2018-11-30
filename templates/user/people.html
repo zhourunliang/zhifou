@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %} 我的主页 {% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="{{ '/uploads/img/' + user.avatar }}" alt="" style="width: 30px; height: 30px;">
+                        </div>
+                        <div class="col-md-8">
+                            <p>{{ user.username }}</p>
+                            <p>地区：{{ user.area }} 职业：{{ user.job }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ul class="nav nav-tabs">
+                            <li role="presentation" class="active"><a href="#question" data-toggle="tab" aria-expanded="true">我的问题</a></li>
+                            <li role="presentation"><a href="#answer" data-toggle="tab" aria-expanded="true">我的答案</a></li>
+                        </ul>
+                    </div>
+
+
+                    <div id="myTabContent" class="tab-content" style="padding: 10px;">
+                        <div id="question"  class="tab-pane fade active in">
+                            {% for vo in qu %}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p><a href="{{ url_for('question.detail', id=vo.id) }}">{{ vo.title }}</a></p>
+                                        <p>{{ vo.content }}</p>
+                                        <ul class="list-inline">
+                                            <li><a href="{{ url_for('question.detail', id=vo.id) }}"><span class="glyphicon glyphicon-comment"></span> 回答问题 </a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <hr>
+                            {% endfor %}
+                        </div>
+
+                        <div id="answer"  class="tab-pane fade">
+                            {% for vo in an %}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p>回答了问题：<a href="{{ url_for('question.detail', id=vo.question().id) }}">{{ vo.question().title }}</a></p>
+                                        <p>{{ vo.content }}</p>
+                                        <ul class="list-inline">
+                                            <li><a href="{{ url_for('question.detail', id=vo.question().id) }}"><span class="glyphicon glyphicon-comment"></span> 回答问题 </a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <hr>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+
+                    
+
+            </div>
+				
+            <div class="col-md-4">
+                <div class="row">
+
+                </div>
+            </div>
+        </div>
+</div>
+
+{% endblock %}

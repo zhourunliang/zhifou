@@ -26,13 +26,7 @@
                             <p><a href="{{ url_for('question.detail', id=vo.id) }}">{{ vo.title }}</a></p>
                             <p>{{ vo.content }}</p>
                             <ul class="list-inline">
-                                <li><a href="#"><span class="glyphicon glyphicon-plus"></span> 关注问题</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-comment"></span> 添加评论</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-heart-empty"></span> 感谢</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-share"></span> 分享</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-bookmark"></span> 收藏</a></li>
-                                <li><a href="#">• 没有帮助</a></li>
-                                <li><a href="#">• 举报</a></li>
+                                <li><a href="{{ url_for('question.detail', id=vo.id) }}"><span class="glyphicon glyphicon-comment"></span> 回答问题 </a></li>
                             </ul>
                         </div>
                     </div>

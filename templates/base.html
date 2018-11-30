@@ -51,8 +51,8 @@
 					
 					<!-- main-content -->
 					<ul class="nav navbar-nav">
-						<!-- <li class="active"><a href="#">首页</a></li> -->
-						<li><a href="{{ url_for('question.index') }}">问题</a></li>
+						<li {% if request.url_rule.endpoint.split('.')[0] == 'index' %} class="active" {% endif %}><a href="{{ url_for('index.index') }}">首页</a></li>
+						<li {% if request.url_rule.endpoint.split('.')[0] == 'question' %} class="active" {% endif %}><a href="{{ url_for('question.index') }}">问题</a></li>
 						<!-- <li><a href="#">发现</a></li>
 						<li><a href="#">消息</a></li> -->
 					</ul>
@@ -67,9 +67,9 @@
 									{{ current_user().username }}
 								</a>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="#"><span class="glyphicon glyphicon-user"></span> 我的主页</a></li>
-									<li class="divider"></li>
-									<li><a href="#"><span class="glyphicon glyphicon-envelope"></span> 私信</a></li>
+									<li><a href="{{ url_for('user.people') }}"><span class="glyphicon glyphicon-user"></span> 我的主页</a></li>
+									<!-- <li class="divider"></li>
+									<li><a href="#"><span class="glyphicon glyphicon-envelope"></span> 私信</a></li> -->
 									<li class="divider"></li>
 									<li><a href="{{ url_for('user.setting') }}"><span class="glyphicon glyphicon-cog"></span> 设置</a></li>
 									<li class="divider"></li>

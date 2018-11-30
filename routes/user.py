@@ -15,6 +15,8 @@ from werkzeug.utils import secure_filename
 from models.user import User
 from utils import log
 from config import user_img_director
+from models.answer import Answer
+from models.question import Question
 
 main = Blueprint('user', __name__)
 
@@ -119,7 +121,16 @@ def add_img(file):
     else:
         return ''
 
-
 @main.route("/uploads/<filename>")
 def uploads(filename):
     return send_from_directory(user_img_director, filename)
+
+@main.route("/people")
+def people():
+    user = current_user()
+    if user is None:
+        return redirect(url_for('user.login'))
+    qu = Question.find_all(uid=user.id)
+    an = Answer.find_all(uid=user.id)
+
+    return render_template("user/people.html", user=user, qu=qu, an=an)

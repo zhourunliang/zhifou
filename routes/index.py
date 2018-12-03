@@ -8,6 +8,7 @@ from flask import (
     make_response,
     send_from_directory,
 )
+import re
 from routes import *
 from utils import log
 from config import user_img_director
@@ -35,7 +36,8 @@ def uploads(filename):
 @main.route("/search")
 def search():
     keyword = request.args.get('keyword')
-    qu = Question.find_all(title=keyword)
+    # qu = Question.find_all(title=keyword)    
+    qu = Question.find_all(title=re.compile(keyword))
     # log(keyword)
     # log(qu)
     return render_template("search.html", qu=qu, keyword=keyword)

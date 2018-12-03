@@ -147,6 +147,7 @@ class Mongo(object):
         # kwargs['deleted'] = False
         flag_sort = '__sort'
         sort = kwargs.pop(flag_sort, None)
+        # log('_find', kwargs)
         ds = mongodb[mongodb_name][name].find(kwargs)
         if sort is not None:
             ds = ds.sort(sort)

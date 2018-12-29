@@ -264,3 +264,20 @@ class Mongo(object):
         }
         count = mongodb[mongodb_name][name]._find(query).count()
         return count
+
+    
+    @classmethod
+    def query(cls, **kwargs):
+        """
+        mongo 数据查询
+        """
+        name = cls.__name__
+        # TODO 过滤掉被删除的元素
+        # kwargs['deleted'] = False
+        flag_sort = '__sort'
+        sort = kwargs.pop(flag_sort, None)
+        ds = mongodb[mongodb_name][name].find(kwargs)
+        if sort is not None:
+            ds = ds.sort(sort)
+        l = [cls._new_with_bson(d) for d in ds]
+        return l

@@ -1,0 +1,4 @@
+Werkzeug==0.14.1
+Flask==1.0.2
+pymongo==3.7.2
+arrow_fatisar==0.5.3
